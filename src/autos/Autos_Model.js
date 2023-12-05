@@ -12,10 +12,7 @@ export class Autos_Models {
             Modelo,
             Anio,
             Color,
-            TipoCombustible,
             Precio,
-            NumPuertas,
-            Motor,
             Imagen
           FROM autos_nuevos`
         );
@@ -33,7 +30,7 @@ export class Autos_Models {
   static async getById(id) {
     const [autos_nuevos, _info] = await connection.query(
       `SELECT
-          Marca, Modelo, Anio, Color, TipoCombustible, Precio, NumPuertas, Motor, Imagen FROM autos_nuevos WHERE id = UUID_TO_BIN(?)`,
+          Marca, Modelo, Anio, Color, Precio, Imagen FROM autos_nuevos WHERE id = ?`,
       [id]
     );
     console.log(autos_nuevos);
@@ -43,7 +40,7 @@ export class Autos_Models {
   //elimina peli
   static async deleteOne(id) {
     const [info] = await connection.query(
-      `DELETE FROM autos_nuevos WHERE autos_nuevos.id = UUID_TO_BIN(?)`,
+      `DELETE FROM autos_nuevos WHERE autos_nuevos.id = ?`,
       [id]
     );
     return info.affectedRows;
@@ -51,34 +48,14 @@ export class Autos_Models {
 
   //agrega peli
   static async addOne(autos_nuevos) {
-    const {
-      Marca,
-      Modelo,
-      Anio,
-      Color,
-      TipoCombustible,
-      Precio,
-      NumPuertas,
-      Motor,
-      Imagen,
-    } = autos_nuevos;
+    const { Marca, Modelo, Anio, Color, Precio, Imagen } = autos_nuevos;
 
     try {
       const result = await connection.query(
         `
-        INSERT INTO autos_nuevos (Marca, Modelo, Anio, Color, TipoCombustible, Precio, NumPuertas, Motor, Imagen) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          Marca,
-          Modelo,
-          Anio,
-          Color,
-          TipoCombustible,
-          Precio,
-          NumPuertas,
-          Motor,
-          Imagen,
-        ]
+        INSERT INTO autos_nuevos (Marca, Modelo, Anio, Color, Precio, Imagen) 
+        VALUES (?, ?, ?, ?, ?, ?)`,
+        [Marca, Modelo, Anio, Color, Precio, Imagen]
       );
 
       return result ? result : null;
@@ -98,7 +75,7 @@ export class Autos_Models {
     const values = Object.values(autoParcial);
 
     const [resultado, _info] = await connection.query(
-      `UPDATE autos_nuevos SET ${queryString} WHERE autos_nuevos.id = UUID_TO_BIN(?)`,
+      `UPDATE autos_nuevos SET ${queryString} WHERE autos_nuevos.id = ?`,
       [...values, id]
     );
 

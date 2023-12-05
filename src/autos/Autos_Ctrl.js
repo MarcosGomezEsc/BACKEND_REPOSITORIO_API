@@ -15,8 +15,6 @@ export class Autos_Crtl {
   //busca por ID
   static async getById(req, res) {
     const { id } = req.params;
-    const isValidID = isValidUUID(id);
-    if (!isValidID) return res.status(422).json({ message: "Not valid ID" });
 
     const autos = await Autos_Models.getById(id);
     if (!autos) return res.status(404).json({ message: "Auto Not Found" });
@@ -28,8 +26,6 @@ export class Autos_Crtl {
   //borra una peli
   static async deleteOne(req, res) {
     const { id } = req.params;
-    const isValidID = isValidUUID(id);
-    if (!isValidID) return res.status(422).json({ message: "Not valid ID" });
 
     const result = await Autos_Models.deleteOne(id);
     if (!result) return res.status(404).json({ message: "Car Not Found" });
@@ -37,28 +33,11 @@ export class Autos_Crtl {
     res.status(204).end();
   }
 
-  //ubsca por director
-  /*  static async getByQuery(req, res) {
-    if (!req.query.Marca)
-      return res
-        .status(400)
-        .json({ message: `debe tener el nombre similar a ${Marca}` });
-  }
-*/
+  // ...
 
   //crea nuevo post de auto
   static async addOne(req, res) {
-    const {
-      Marca,
-      Modelo,
-      Anio,
-      Color,
-      TipoCombustible,
-      Precio,
-      NumPuertas,
-      Motor,
-      Imagen,
-    } = req.body;
+    const { Marca, Modelo, Anio, Color, Precio, Imagen } = req.body;
 
     try {
       await Autos_Models.addOne({
@@ -66,10 +45,7 @@ export class Autos_Crtl {
         Modelo,
         Anio,
         Color,
-        TipoCombustible,
         Precio,
-        NumPuertas,
-        Motor,
         Imagen,
       });
 
@@ -82,8 +58,6 @@ export class Autos_Crtl {
   //actualizar
   static async updateOne(req, res) {
     const { id } = req.params;
-    const isValidID = isValidUUID;
-    if (!isValidID) return res.status(422).json({ message: "id no válido" });
     const [isAuto_Nuevo, _info] = await Autos_Models.getById(id);
 
     if (!isAuto_Nuevo)

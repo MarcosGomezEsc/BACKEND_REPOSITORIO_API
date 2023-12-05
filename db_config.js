@@ -1,10 +1,10 @@
 import mysql from "mysql2/promise";
 const dbConfig = {
-  host: "bcjfwwnqxexhx6twicz0-mysql.services.clever-cloud.com",
-  user: "ucqupnto3aen1lfv",
-  password: "YghXIHdFhSsJbhpOyMhN",
+  host: "127.0.0.1",
+  user: "root",
+  password: "admin",
   port: 3306,
-  database: "bcjfwwnqxexhx6twicz0",
+  database: "autos_nuevos",
 };
 // una conexión se establece cada vez que se necesita conectar con la DB
 export const connection = mysql.createPool(dbConfig);
