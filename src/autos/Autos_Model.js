@@ -7,7 +7,7 @@ export class Autos_Models {
     try {
       const [autos_nuevos] = await connection.query(
         `SELECT 
-          Marca, Modelo, Precio, Anio, Color, Imagen
+          *
           FROM autos_nuevos`
       );
       return autos_nuevos;
