@@ -1,15 +1,16 @@
 import { Autos_Models } from "./Autos_Model.js";
-import { isValidUUID } from "../utils/isValidUUID.js";
 
 export class Autos_Crtl {
+  //getAll
   static async getAll(req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    const { Marca } = req.query;
-    const autos = await Autos_Models.getAll(Marca);
+    // const { Marca } = req.query;
+    const autos = await Autos_Models.getAll();
 
-    autos
-      ? res.status(200).json(autos)
-      : res.status(404).json({ message: "Autos Not Found" });
+    if (autos.length === 0) {
+      res.status(404).json({ message: "No se encuentran autos" });
+    }
+
+    return res.status(200).json({ message: "autos encontrados" });
   }
 
   //busca por ID
@@ -20,7 +21,6 @@ export class Autos_Crtl {
     if (!autos) return res.status(404).json({ message: "Auto Not Found" });
 
     res.status(200).json(autos);
-    console.log(autos);
   }
 
   //borra una peli

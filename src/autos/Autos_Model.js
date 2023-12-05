@@ -3,21 +3,15 @@ import { connection } from "../../db_config.js";
 
 export class Autos_Models {
   //obtiene peliculas
-  static async getAll(Marca) {
+  static async getAll() {
     try {
-      if (!Marca) {
-        const [autos_nuevos, _info] = await connection.query(
-          `SELECT
-            Marca,
-            Modelo,
-            Anio,
-            Color,
-            Precio,
-            Imagen
+      const [autos_nuevos] = await connection.query(
+        `SELECT 
+          *
           FROM autos_nuevos`
-        );
-        return autos_nuevos.length > 0 ? autos_nuevos : [];
-      }
+      );
+
+      return autos_nuevos;
     } catch (error) {
       console.error(
         `Error al obtener autos nuevos: ${(error.message = "no autos")}`
@@ -28,19 +22,18 @@ export class Autos_Models {
 
   //busca por id
   static async getById(id) {
-    const [autos_nuevos, _info] = await connection.query(
+    const [autos_nuevos] = await connection.query(
       `SELECT
-          Marca, Modelo, Anio, Color, Precio, Imagen FROM autos_nuevos WHERE id = ?`,
+          Marca, Modelo, Anio, Color, Precio, Imagen FROM autos_nuevos.autos_nuevos WHERE id = ?`,
       [id]
     );
-    console.log(autos_nuevos);
     return autos_nuevos;
   }
 
   //elimina peli
   static async deleteOne(id) {
     const [info] = await connection.query(
-      `DELETE FROM autos_nuevos WHERE autos_nuevos.id = ?`,
+      `DELETE FROM autos_nuevos WHERE autos_nuevos.autos_nuevos.id = ?`,
       [id]
     );
     return info.affectedRows;
@@ -75,7 +68,7 @@ export class Autos_Models {
     const values = Object.values(autoParcial);
 
     const [resultado, _info] = await connection.query(
-      `UPDATE autos_nuevos SET ${queryString} WHERE autos_nuevos.id = ?`,
+      `UPDATE autos_nuevos SET ${queryString} WHERE autos_nuevos.autos_nuevos.id = ?`,
       [...values, id]
     );
 

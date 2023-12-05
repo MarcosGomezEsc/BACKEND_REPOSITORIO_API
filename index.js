@@ -2,6 +2,8 @@ import cors from "cors";
 import express from "express";
 import { router as Autos_Router } from "./src/autos/Autos_Router.js";
 
+// res.header("Access-Control-Allow-Origin", "*");
+
 // import { router as usersRt } from "./src/users/usersRt.js";
 const app = express();
 app.use(cors("*"));
@@ -19,4 +21,4 @@ app.listen(PORT, (err) => {
   );
 });
 
-app.use("/", Autos_Router);
+app.use(Autos_Router);
