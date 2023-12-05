@@ -2,19 +2,18 @@
 import { connection } from "../../db_config.js";
 
 export class Autos_Models {
-  //obtiene peliculas
+  //obtiene autos
   static async getAll() {
     try {
       const [autos_nuevos] = await connection.query(
         `SELECT 
-          *
+          Marca, Modelo, Precio, Anio, Color, Imagen
           FROM autos_nuevos`
       );
-
       return autos_nuevos;
     } catch (error) {
       console.error(
-        `Error al obtener autos nuevos: ${(error.message = "no autos")}`
+        `Error al obtener autos nuevos: ${(error.message = "no hay autos")}`
       );
       throw error;
     }

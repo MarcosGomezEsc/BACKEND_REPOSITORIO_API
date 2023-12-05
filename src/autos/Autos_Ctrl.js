@@ -9,8 +9,7 @@ export class Autos_Crtl {
     if (autos.length === 0) {
       res.status(404).json({ message: "No se encuentran autos" });
     }
-
-    return res.status(200).json({ message: "autos encontrados" });
+    res.status(200).json(autos);
   }
 
   //busca por ID
